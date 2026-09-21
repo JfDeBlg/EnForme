@@ -325,6 +325,51 @@ main {
 }
 .toast.is-visible { opacity: 1; transform: translate(-50%, 0); }
 
+/* ---------- Minuteur d'exercice ---------- */
+
+.timer-card {
+  text-align: center;
+  border-left-color: var(--gold);
+}
+
+.timer-phase {
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: none;
+  margin-bottom: var(--space-2);
+}
+.timer-phase--travail { color: var(--flame); }
+.timer-phase--repos { color: var(--gold); }
+.timer-phase--echauffement { color: var(--text-muted); }
+
+.timer-display {
+  font-size: 3rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  color: var(--text);
+  margin-bottom: 4px;
+  transition: color .2s ease;
+}
+.timer-display.is-ending { color: var(--flame-dark); }
+
+.timer-steps {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  margin-bottom: var(--space-3);
+}
+
+/* ---------- Schéma d'exercice (pictogramme SVG) ---------- */
+
+.diagram {
+  display: flex;
+  justify-content: center;
+  margin-bottom: var(--space-3);
+}
+.diagram svg {
+  width: 120px;
+  height: 120px;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .menu-panel, .menu-overlay, .burger span, .toast { transition: none; }
 }

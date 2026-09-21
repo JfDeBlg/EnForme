@@ -264,6 +264,7 @@ const App = {
   },
 
   renderSeanceStep() {
+    ExerciseTimer.stop();
     const session = this.currentSession;
     const total = session.exercices.length;
     const idx = session.exerciceIndex;
@@ -276,9 +277,13 @@ const App = {
     const materiel = ex.materiel.map((m) => MATERIEL_LABELS[m] || m).join(", ");
     const consignes = ex.consignes.map((c) => `<li>${c}</li>`).join("");
     const videoUrl = `https://www.youtube.com/results?search_query=${encodeURIComponent(ex.videoQuery)}`;
+    const diagram = window.EXERCISE_DIAGRAMS && window.EXERCISE_DIAGRAMS[ex.id]
+      ? `<div class="diagram">${window.EXERCISE_DIAGRAMS[ex.id]}</div>`
+      : "";
 
     document.getElementById("seance-content").innerHTML = `
       <div class="card card--flame">
+        ${diagram}
         <h2>${ex.nom}</h2>
         <p>${ex.description}</p>
         <ul>${consignes}</ul>
@@ -286,10 +291,69 @@ const App = {
         <p><strong>Matériel :</strong> ${materiel || "aucun"}</p>
         <a class="btn btn--ghost" href="${videoUrl}" target="_blank" rel="noopener">▶ Voir une démonstration vidéo</a>
       </div>
+      ${ex.timer ? this.timerBlockTemplate() : ""}
     `;
+
+    if (ex.timer) this.setupTimer(ex.timer);
 
     const btnNext = document.getElementById("btn-seance-next");
     btnNext.textContent = idx + 1 < total ? "Exercice suivant" : "Terminer la séance";
+  },
+
+  timerBlockTemplate() {
+    return `
+      <div class="card timer-card">
+        <div class="timer-phase" id="timer-phase-label">Prêt</div>
+        <div class="timer-display" id="timer-display">0:00</div>
+        <div class="timer-steps" id="timer-steps"></div>
+        <div class="btn-row">
+          <button class="btn btn--primary" id="btn-timer-toggle">Démarrer</button>
+          <button class="btn btn--ghost" id="btn-timer-skip">Phase suivante</button>
+          <button class="btn btn--ghost" id="btn-timer-reset">Réinitialiser</button>
+        </div>
+      </div>
+    `;
+  },
+
+  setupTimer(cfg) {
+    const display = document.getElementById("timer-display");
+    const label = document.getElementById("timer-phase-label");
+    const stepsEl = document.getElementById("timer-steps");
+    const toggleBtn = document.getElementById("btn-timer-toggle");
+
+    ExerciseTimer.load(cfg, {
+      onTick: (sec) => {
+        display.textContent = ExerciseTimer.formatTime(sec);
+        display.classList.toggle("is-ending", sec <= 3);
+      },
+      onPhaseChange: (phase, i, total) => {
+        label.textContent = phase.label;
+        label.className = "timer-phase timer-phase--" + phase.kind;
+        stepsEl.textContent = `Phase ${i + 1} / ${total}`;
+      },
+      onComplete: () => {
+        label.textContent = "Terminé 👍";
+        toggleBtn.textContent = "Redémarrer";
+      },
+    });
+
+    toggleBtn.onclick = () => {
+      if (ExerciseTimer.running) {
+        ExerciseTimer.pause();
+        toggleBtn.textContent = "Reprendre";
+      } else {
+        if (ExerciseTimer.secondsLeft <= 0 && ExerciseTimer.phaseIndex >= ExerciseTimer.phases.length - 1) {
+          ExerciseTimer.reset();
+        }
+        ExerciseTimer.start();
+        toggleBtn.textContent = "Pause";
+      }
+    };
+    document.getElementById("btn-timer-skip").onclick = () => ExerciseTimer.skipPhase();
+    document.getElementById("btn-timer-reset").onclick = () => {
+      ExerciseTimer.reset();
+      toggleBtn.textContent = "Démarrer";
+    };
   },
 
   bindSeance() {
@@ -305,11 +369,15 @@ const App = {
     });
     document.getElementById("btn-seance-quitter").addEventListener("click", () => {
       const ok = confirm("Quitter la séance ? Votre progression est sauvegardée, vous pourrez reprendre plus tard.");
-      if (ok) this.goTo("accueil");
+      if (ok) {
+        ExerciseTimer.stop();
+        this.goTo("accueil");
+      }
     });
   },
 
   finishSession() {
+    ExerciseTimer.stop();
     const ressenti = prompt("Ressenti de la séance ? (1 = difficile, 5 = facile)", "3");
     const session = this.currentSession;
     Store.addHistoryEntry({

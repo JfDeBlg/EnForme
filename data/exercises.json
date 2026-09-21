@@ -127,6 +127,7 @@
         "30 secondes de maintien par côté"
       ],
       "series": "2 séries de 30 s par côté",
+      "timer": { "type": "attente", "rounds": 4, "workSec": 30, "restSec": 10, "alterne": true },
       "videoQuery": "90 90 hip stretch tutorial",
       "source": "Synthèse Swyng golf fitness"
     },
@@ -191,6 +192,7 @@
         "Respirez normalement pendant le maintien"
       ],
       "series": "3 séries de 20-30 s par côté",
+      "timer": { "type": "attente", "rounds": 6, "workSec": 25, "restSec": 15, "alterne": true },
       "videoQuery": "side plank tutorial",
       "source": "Synthèse Physiophyx"
     },
@@ -239,6 +241,7 @@
         "L'intensité vive doit rendre la conversation difficile, pas impossible"
       ],
       "series": "20-25 minutes au total",
+      "timer": { "type": "intervalle", "warmupSec": 300, "workSec": 60, "restSec": 60, "rounds": 7 },
       "videoQuery": "entrainement fractionné vélo elliptique",
       "source": "Principe classique d'entraînement par intervalles"
     },
@@ -255,6 +258,7 @@
         "Respiration lente et profonde sur chaque étirement"
       ],
       "series": "1 enchaînement de 8-10 minutes",
+      "timer": { "type": "duree", "totalSec": 540 },
       "videoQuery": "étirements complets fin de séance",
       "source": "Méthode classique d'étirements statiques"
     }
