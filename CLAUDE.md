@@ -68,6 +68,14 @@ Chaque évolution significative doit :
 ## Historique des sessions de développement
 
 - **V0 (initiale)** : scaffolding complet — menu sandwich, réglages avec profil/objectifs/export-import, 5 programmes prédéfinis, 16 exercices (recherche synthétisée), séance guidée avec sauvegarde de progression, historique, statistiques basiques, PWA installable (manifest + service worker), icônes générées.
+- **V1.1** : minuteur intégré (`js/timer.js`, trois types de config : `attente`, `intervalle`, `duree` — voir champ `timer` dans `exercises.json`), sans dépendance externe (bip via Web Audio, vibration via `navigator.vibrate`).
+- **V1.2** : bibliothèque d'exercices consultable (`view-bibliotheque`), filtrage par objectif/matériel + recherche texte, détail en panneau superposé (`.detail-overlay`). À cette occasion, correction de données : les `objectifs[]` des exercices ne portaient que les tags sport (golf/ski/voile/kite), sans `souplesse`/`force`/`endurance` — corrigé via une règle `categorie → objectif` dans `tools/generate_diagrams.py`'s voisin (voir historique git) pour rester cohérent avec les curseurs du profil.
+- **V1.3** : pictogrammes SVG par exercice (`js/diagrams.js`, généré par `tools/generate_diagrams.py`). Convention : trait or = posture, trait flamme = segment qui travaille, pointillés = élastique/trajectoire. **Ne pas éditer `js/diagrams.js` à la main** : modifier les coordonnées dans le script Python et relancer `python3 tools/generate_diagrams.py`, pour garder les deux fichiers synchronisés.
+
+## Notes techniques utiles pour la suite
+
+- Pour prévisualiser tous les pictogrammes en une planche contact (utile après une modification de `tools/generate_diagrams.py`) : le script peut être appelé puis son JSON extrait et rendu en PNG via `cairosvg` (`pip install cairosvg --break-system-packages`). Voir la session de développement V1.3 dans l'historique git pour un exemple de script de planche contact.
+- Le service worker doit voir son `CACHE_NAME` incrémenté (`v3`, `v4`, ...) à chaque ajout/modification de fichier statique, sans quoi les utilisateurs ayant déjà installé la PWA garderont une version en cache.
 
 ## Idées explorées puis écartées (pour éviter de les reproposer sans raison)
 

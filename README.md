@@ -66,14 +66,22 @@ La bibliothèque V0 (`data/exercises.json`) a été constituée à partir d'une 
 
 Voir aussi `CLAUDE.md` pour le contexte destiné à un futur développeur (humain ou IA).
 
-- [ ] Minuteur intégré pour les exercices chronométrés (gainage, étirements)
-- [ ] Bibliothèque d'exercices consultable librement (hors séance), avec filtres
-- [ ] Schémas/illustrations SVG par exercice (en plus des vidéos)
+- [x] Minuteur intégré pour les exercices chronométrés (gainage, étirements, fractionné)
+- [x] Bibliothèque d'exercices consultable librement (hors séance), avec filtres objectif/matériel/recherche
+- [x] Schémas SVG (pictogrammes) par exercice, générés par `tools/generate_diagrams.py`
+- [ ] Programmes générés dynamiquement à partir des curseurs d'objectifs du profil (au lieu de programmes fixes) — en cours
 - [ ] Vidéos curées (liens directs vérifiés) pour les exercices prioritaires golf
-- [ ] Programmes générés dynamiquement à partir des curseurs d'objectifs du profil (au lieu de programmes fixes)
 - [ ] Graphiques de progression plus riches (tendance dans le temps)
 - [ ] Rappel/notification locale pour respecter la fréquence hebdomadaire visée
 - [ ] Mode sombre/clair automatique (actuellement thème sombre chaud fixe)
+
+## Pictogrammes d'exercice
+
+Chaque exercice a un petit schéma "stick figure" (`js/diagrams.js`), généré par `tools/generate_diagrams.py`. Convention visuelle : trait **or** = posture/appui, trait **flamme** = le segment du corps qui travaille ou se déplace, pointillés = élastique ou trajectoire de rotation. Pour ajouter/corriger un pictogramme, éditer les coordonnées dans `tools/generate_diagrams.py` puis relancer :
+```bash
+python3 tools/generate_diagrams.py
+```
+Le script régénère entièrement `js/diagrams.js`.
 
 ## Licence / usage
 
