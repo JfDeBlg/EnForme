@@ -1,6 +1,6 @@
 /* EnForme! — service worker : cache l'app shell pour un usage hors-ligne. */
 
-const CACHE_NAME = "enforme-cache-v2";
+const CACHE_NAME = "enforme-cache-v3";
 const APP_SHELL = [
   "./",
   "./index.html",

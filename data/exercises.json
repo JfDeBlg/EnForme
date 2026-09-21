@@ -5,8 +5,15 @@
     {
       "id": "ex-birddog",
       "nom": "Bird Dog",
-      "objectifs": ["golf", "ski", "voile"],
-      "materiel": ["tapis"],
+      "objectifs": [
+        "golf",
+        "ski",
+        "voile",
+        "force"
+      ],
+      "materiel": [
+        "tapis"
+      ],
       "niveau": "debutant",
       "categorie": "gainage",
       "description": "À quatre pattes, tendez un bras et la jambe opposée en gardant le dos plat, puis revenez sans laisser le bassin tourner.",
@@ -21,8 +28,13 @@
     {
       "id": "ex-deadbug",
       "nom": "Dead Bug",
-      "objectifs": ["golf"],
-      "materiel": ["tapis"],
+      "objectifs": [
+        "golf",
+        "force"
+      ],
+      "materiel": [
+        "tapis"
+      ],
       "niveau": "debutant",
       "categorie": "gainage",
       "description": "Allongé sur le dos, bras tendus vers le plafond, descendez lentement un bras et la jambe opposée vers le sol sans que le bas du dos ne se creuse.",
@@ -37,8 +49,15 @@
     {
       "id": "ex-pallof",
       "nom": "Pallof Press (anti-rotation)",
-      "objectifs": ["golf", "kite", "voile"],
-      "materiel": ["elastique"],
+      "objectifs": [
+        "golf",
+        "kite",
+        "voile",
+        "force"
+      ],
+      "materiel": [
+        "elastique"
+      ],
       "niveau": "intermediaire",
       "categorie": "puissance-golf",
       "description": "Élastique fixé sur le côté à hauteur de poitrine (porte, pied de meuble stable) : tenez-le à deux mains devant le sternon et poussez les bras droit devant vous sans laisser le buste tourner vers l'ancrage.",
@@ -53,8 +72,13 @@
     {
       "id": "ex-bandrotation",
       "nom": "Rotation élastique golfique (chop)",
-      "objectifs": ["golf"],
-      "materiel": ["elastique"],
+      "objectifs": [
+        "golf",
+        "force"
+      ],
+      "materiel": [
+        "elastique"
+      ],
       "niveau": "intermediaire",
       "categorie": "puissance-golf",
       "description": "Élastique ancré sur le côté, tenu à deux mains devant vous : tournez le buste en s'éloignant de l'ancrage en utilisant les hanches, comme au sommet de la montée du swing.",
@@ -69,8 +93,14 @@
     {
       "id": "ex-lungerotation",
       "nom": "Fente avec rotation thoracique",
-      "objectifs": ["golf", "ski"],
-      "materiel": ["tapis"],
+      "objectifs": [
+        "golf",
+        "ski",
+        "souplesse"
+      ],
+      "materiel": [
+        "tapis"
+      ],
       "niveau": "intermediaire",
       "categorie": "mobilite",
       "description": "En fente avant, mains jointes devant la poitrine, tournez le buste vers la jambe avant puis revenez au centre.",
@@ -85,8 +115,16 @@
     {
       "id": "ex-worldsgreateststretch",
       "nom": "World's Greatest Stretch",
-      "objectifs": ["golf", "ski", "voile", "kite"],
-      "materiel": ["tapis"],
+      "objectifs": [
+        "golf",
+        "ski",
+        "voile",
+        "kite",
+        "souplesse"
+      ],
+      "materiel": [
+        "tapis"
+      ],
       "niveau": "debutant",
       "categorie": "mobilite",
       "description": "Grand fendu avant, main opposée au sol, puis ouvrez le buste et le bras vers le plafond en pivotant depuis le haut du dos.",
@@ -101,8 +139,13 @@
     {
       "id": "ex-openbook",
       "nom": "Ouverture de livre (T-spine)",
-      "objectifs": ["golf"],
-      "materiel": ["tapis"],
+      "objectifs": [
+        "golf",
+        "souplesse"
+      ],
+      "materiel": [
+        "tapis"
+      ],
       "niveau": "debutant",
       "categorie": "mobilite",
       "description": "Allongé sur le côté, genoux pliés à 90°, ouvrez le bras du dessus comme un livre en suivant la main du regard, jusqu'à toucher le sol de l'autre côté si possible.",
@@ -117,8 +160,14 @@
     {
       "id": "ex-90-90",
       "nom": "Étirement hanche 90/90",
-      "objectifs": ["golf", "ski"],
-      "materiel": ["tapis"],
+      "objectifs": [
+        "golf",
+        "ski",
+        "souplesse"
+      ],
+      "materiel": [
+        "tapis"
+      ],
       "niveau": "debutant",
       "categorie": "mobilite",
       "description": "Assis au sol, une jambe pliée à 90° devant, l'autre à 90° sur le côté : penchez le buste au-dessus de la jambe avant puis changez de côté.",
@@ -127,15 +176,28 @@
         "30 secondes de maintien par côté"
       ],
       "series": "2 séries de 30 s par côté",
-      "timer": { "type": "attente", "rounds": 4, "workSec": 30, "restSec": 10, "alterne": true },
+      "timer": {
+        "type": "attente",
+        "rounds": 4,
+        "workSec": 30,
+        "restSec": 10,
+        "alterne": true
+      },
       "videoQuery": "90 90 hip stretch tutorial",
       "source": "Synthèse Swyng golf fitness"
     },
     {
       "id": "ex-glutebridge",
       "nom": "Pont fessier",
-      "objectifs": ["golf", "ski", "voile"],
-      "materiel": ["tapis"],
+      "objectifs": [
+        "golf",
+        "ski",
+        "voile",
+        "force"
+      ],
+      "materiel": [
+        "tapis"
+      ],
       "niveau": "debutant",
       "categorie": "force",
       "description": "Allongé sur le dos, genoux pliés, poussez les hanches vers le plafond jusqu'à aligner genoux-hanches-épaules, puis redescendez.",
@@ -150,8 +212,14 @@
     {
       "id": "ex-gobletsquat",
       "nom": "Squat gobelet (haltères)",
-      "objectifs": ["golf", "ski"],
-      "materiel": ["halteres"],
+      "objectifs": [
+        "golf",
+        "ski",
+        "force"
+      ],
+      "materiel": [
+        "halteres"
+      ],
       "niveau": "debutant",
       "categorie": "force",
       "description": "Les deux haltères tenus contre la poitrine, descendez en squat en gardant le dos droit et les talons au sol.",
@@ -166,8 +234,14 @@
     {
       "id": "ex-rowelastique",
       "nom": "Rowing élastique (posture dos)",
-      "objectifs": ["golf", "voile"],
-      "materiel": ["elastique"],
+      "objectifs": [
+        "golf",
+        "voile",
+        "force"
+      ],
+      "materiel": [
+        "elastique"
+      ],
       "niveau": "debutant",
       "categorie": "force",
       "description": "Élastique ancré devant vous à hauteur de poitrine : tirez les coudes vers l'arrière en serrant les omoplates.",
@@ -182,8 +256,15 @@
     {
       "id": "ex-sideplank",
       "nom": "Gainage latéral",
-      "objectifs": ["golf", "kite", "voile"],
-      "materiel": ["tapis"],
+      "objectifs": [
+        "golf",
+        "kite",
+        "voile",
+        "force"
+      ],
+      "materiel": [
+        "tapis"
+      ],
       "niveau": "intermediaire",
       "categorie": "gainage",
       "description": "Appui sur l'avant-bras et le bord du pied, corps aligné de la tête aux chevilles, hanche relevée et maintenue.",
@@ -192,15 +273,29 @@
         "Respirez normalement pendant le maintien"
       ],
       "series": "3 séries de 20-30 s par côté",
-      "timer": { "type": "attente", "rounds": 6, "workSec": 25, "restSec": 15, "alterne": true },
+      "timer": {
+        "type": "attente",
+        "rounds": 6,
+        "workSec": 25,
+        "restSec": 15,
+        "alterne": true
+      },
       "videoQuery": "side plank tutorial",
       "source": "Synthèse Physiophyx"
     },
     {
       "id": "ex-catcow",
       "nom": "Chat-Vache",
-      "objectifs": ["golf", "ski", "voile", "kite"],
-      "materiel": ["tapis"],
+      "objectifs": [
+        "golf",
+        "ski",
+        "voile",
+        "kite",
+        "souplesse"
+      ],
+      "materiel": [
+        "tapis"
+      ],
       "niveau": "debutant",
       "categorie": "mobilite",
       "description": "À quatre pattes, alternez creuser le dos (regard vers le haut) et l'arrondir (regard vers le nombril), au rythme de la respiration.",
@@ -215,8 +310,15 @@
     {
       "id": "ex-shoulderband",
       "nom": "Rotation externe épaule (élastique)",
-      "objectifs": ["golf", "kite", "voile"],
-      "materiel": ["elastique"],
+      "objectifs": [
+        "golf",
+        "kite",
+        "voile",
+        "souplesse"
+      ],
+      "materiel": [
+        "elastique"
+      ],
       "niveau": "debutant",
       "categorie": "mobilite",
       "description": "Coude fixé contre les côtes à 90°, tirez l'élastique vers l'extérieur en gardant le coude collé au corps.",
@@ -231,8 +333,16 @@
     {
       "id": "ex-elliptique-fractionne",
       "nom": "Vélo elliptique — fractionné",
-      "objectifs": ["golf", "ski", "voile", "kite"],
-      "materiel": ["velo"],
+      "objectifs": [
+        "golf",
+        "ski",
+        "voile",
+        "kite",
+        "endurance"
+      ],
+      "materiel": [
+        "velo"
+      ],
       "niveau": "intermediaire",
       "categorie": "cardio",
       "description": "Alternez des blocs d'effort soutenu et des blocs de récupération pour développer l'endurance générale qui soutient tous vos sports.",
@@ -241,15 +351,29 @@
         "L'intensité vive doit rendre la conversation difficile, pas impossible"
       ],
       "series": "20-25 minutes au total",
-      "timer": { "type": "intervalle", "warmupSec": 300, "workSec": 60, "restSec": 60, "rounds": 7 },
+      "timer": {
+        "type": "intervalle",
+        "warmupSec": 300,
+        "workSec": 60,
+        "restSec": 60,
+        "rounds": 7
+      },
       "videoQuery": "entrainement fractionné vélo elliptique",
       "source": "Principe classique d'entraînement par intervalles"
     },
     {
       "id": "ex-catcow-mat-souplesse",
       "nom": "Étirement complet d'ouverture (relâchement)",
-      "objectifs": ["golf", "ski", "voile", "kite"],
-      "materiel": ["tapis"],
+      "objectifs": [
+        "golf",
+        "ski",
+        "voile",
+        "kite",
+        "souplesse"
+      ],
+      "materiel": [
+        "tapis"
+      ],
       "niveau": "debutant",
       "categorie": "souplesse",
       "description": "Séquence classique de retour au calme : chat-vache, torsion allongée genoux vers le sol, étirement des ischio-jambiers en position assise.",
@@ -258,7 +382,10 @@
         "Respiration lente et profonde sur chaque étirement"
       ],
       "series": "1 enchaînement de 8-10 minutes",
-      "timer": { "type": "duree", "totalSec": 540 },
+      "timer": {
+        "type": "duree",
+        "totalSec": 540
+      },
       "videoQuery": "étirements complets fin de séance",
       "source": "Méthode classique d'étirements statiques"
     }

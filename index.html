@@ -29,6 +29,7 @@
     <li class="divider"></li>
     <li><button data-nav="nouvel-entrainement"><span class="ico">🔥</span> Nouvel entraînement</button></li>
     <li><button data-nav="reprendre"><span class="ico">⏯️</span> Reprendre un entraînement</button></li>
+    <li><button data-nav="bibliotheque"><span class="ico">📚</span> Bibliothèque d'exercices</button></li>
     <li><button data-nav="historique"><span class="ico">📋</span> Historique</button></li>
     <li><button data-nav="statistiques"><span class="ico">📊</span> Statistiques</button></li>
     <li class="divider"></li>
@@ -85,6 +86,30 @@
     <div class="btn-row" style="margin-top: var(--space-2);">
       <button class="btn btn--ghost" id="btn-seance-quitter">Quitter (sauvegarder)</button>
     </div>
+  </section>
+
+  <!-- BIBLIOTHEQUE -->
+  <section class="view" id="view-bibliotheque">
+    <h1>Bibliothèque d'exercices</h1>
+    <p>Consultez le détail de chaque exercice, indépendamment d'une séance.</p>
+
+    <div class="field">
+      <label for="biblio-search">Recherche</label>
+      <input type="text" id="biblio-search" placeholder="ex. hanche, rotation, gainage..." />
+    </div>
+
+    <div class="field">
+      <label>Objectif</label>
+      <div class="chip-row" id="biblio-filter-objectifs"></div>
+    </div>
+    <div class="field">
+      <label>Matériel</label>
+      <div class="chip-row" id="biblio-filter-materiel"></div>
+    </div>
+
+    <div id="biblio-count" style="color:var(--text-muted); font-size:0.85rem; margin-bottom:10px;"></div>
+    <div id="biblio-list"></div>
+    <div id="biblio-detail"></div>
   </section>
 
   <!-- REPRENDRE -->

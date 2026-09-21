@@ -25,6 +25,7 @@ const App = {
   exercisesById: {},
   programmes: [],
   profile: null,
+  biblioFilters: { objectifs: new Set(), materiel: new Set(), search: "" },
 
   async init() {
     this.profile = Store.getProfile();
@@ -36,6 +37,7 @@ const App = {
     this.renderReprendre();
     this.renderHistorique();
     this.renderStatistiques();
+    this.renderBibliotheque();
     this.goTo("accueil");
     this.registerServiceWorker();
   },
@@ -393,6 +395,119 @@ const App = {
     this.renderStatistiques();
     this.renderReprendre();
     this.goTo("accueil");
+  },
+
+  /* ---------------- Bibliothèque d'exercices ---------------- */
+
+  renderBibliotheque() {
+    this.renderBiblioChips();
+    document.getElementById("biblio-search").oninput = (e) => {
+      this.biblioFilters.search = e.target.value.trim().toLowerCase();
+      this.renderBiblioList();
+    };
+    this.renderBiblioList();
+  },
+
+  renderBiblioChips() {
+    const objWrap = document.getElementById("biblio-filter-objectifs");
+    const matWrap = document.getElementById("biblio-filter-materiel");
+
+    const objKeys = Object.keys(OBJECTIF_LABELS).filter((k) =>
+      Object.values(this.exercisesById).some((ex) => ex.objectifs.includes(k))
+    );
+
+    objWrap.innerHTML = objKeys
+      .map((k) => `<button class="chip" data-obj="${k}">${OBJECTIF_LABELS[k]}</button>`)
+      .join("");
+    matWrap.innerHTML = Object.keys(MATERIEL_LABELS)
+      .map((k) => `<button class="chip" data-mat="${k}">${MATERIEL_LABELS[k]}</button>`)
+      .join("");
+
+    objWrap.querySelectorAll("[data-obj]").forEach((chip) => {
+      chip.addEventListener("click", () => {
+        const key = chip.dataset.obj;
+        this.biblioFilters.objectifs.has(key)
+          ? this.biblioFilters.objectifs.delete(key)
+          : this.biblioFilters.objectifs.add(key);
+        chip.classList.toggle("is-active");
+        this.renderBiblioList();
+      });
+    });
+    matWrap.querySelectorAll("[data-mat]").forEach((chip) => {
+      chip.addEventListener("click", () => {
+        const key = chip.dataset.mat;
+        this.biblioFilters.materiel.has(key)
+          ? this.biblioFilters.materiel.delete(key)
+          : this.biblioFilters.materiel.add(key);
+        chip.classList.toggle("is-active");
+        this.renderBiblioList();
+      });
+    });
+  },
+
+  filteredExercises() {
+    const { objectifs, materiel, search } = this.biblioFilters;
+    return Object.values(this.exercisesById).filter((ex) => {
+      if (objectifs.size && !ex.objectifs.some((o) => objectifs.has(o))) return false;
+      if (materiel.size && !ex.materiel.some((m) => materiel.has(m))) return false;
+      if (search) {
+        const haystack = (ex.nom + " " + ex.description).toLowerCase();
+        if (!haystack.includes(search)) return false;
+      }
+      return true;
+    });
+  },
+
+  renderBiblioList() {
+    const list = this.filteredExercises();
+    document.getElementById("biblio-count").textContent =
+      `${list.length} exercice${list.length > 1 ? "s" : ""}`;
+
+    document.getElementById("biblio-list").innerHTML = list
+      .map((ex) => {
+        const tags = ex.objectifs.map((o) => OBJECTIF_LABELS[o] || o).join(" · ");
+        return `<button class="biblio-item" data-exid="${ex.id}">
+          <strong>${ex.nom}</strong>
+          <span class="biblio-item-tags">${tags}</span>
+        </button>`;
+      })
+      .join("") || `<div class="empty-state"><span class="ico">🔍</span>Aucun exercice ne correspond à ces filtres.</div>`;
+
+    document.querySelectorAll("#biblio-list [data-exid]").forEach((btn) => {
+      btn.addEventListener("click", () => this.openBiblioDetail(btn.dataset.exid));
+    });
+  },
+
+  openBiblioDetail(exId) {
+    const ex = this.exercisesById[exId];
+    if (!ex) return;
+    const materiel = ex.materiel.map((m) => MATERIEL_LABELS[m] || m).join(", ");
+    const consignes = ex.consignes.map((c) => `<li>${c}</li>`).join("");
+    const videoUrl = `https://www.youtube.com/results?search_query=${encodeURIComponent(ex.videoQuery)}`;
+    const diagram = window.EXERCISE_DIAGRAMS && window.EXERCISE_DIAGRAMS[ex.id]
+      ? `<div class="diagram">${window.EXERCISE_DIAGRAMS[ex.id]}</div>`
+      : "";
+
+    const wrap = document.getElementById("biblio-detail");
+    wrap.innerHTML = `
+      <div class="detail-overlay" id="biblio-overlay">
+        <div class="detail-sheet">
+          ${diagram}
+          <h2>${ex.nom}</h2>
+          <p>${ex.description}</p>
+          <ul>${consignes}</ul>
+          <p><strong>Format :</strong> ${ex.series}</p>
+          <p><strong>Matériel :</strong> ${materiel || "aucun"}</p>
+          <a class="btn btn--ghost" href="${videoUrl}" target="_blank" rel="noopener">▶ Voir une démonstration vidéo</a>
+          <button class="btn btn--primary btn--block" id="btn-biblio-close" style="margin-top:14px;">Fermer</button>
+        </div>
+      </div>
+    `;
+    const close = () => (wrap.innerHTML = "");
+    document.getElementById("biblio-overlay").addEventListener("click", (e) => {
+      if (e.target.id === "biblio-overlay") close();
+    });
+    document.getElementById("btn-biblio-close").addEventListener("click", close);
   },
 
   /* ---------------- Reprendre ---------------- */
