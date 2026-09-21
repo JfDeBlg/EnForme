@@ -1,0 +1,330 @@
+/* ==========================================================================
+   EnForme! — Design tokens
+   Palette : braise (fond sombre chaud) + flamme (orange/rouge) + or (accent)
+   Principe : un seul accent vif par écran, chrome minimal, gestes clairs.
+   ========================================================================== */
+
+:root {
+  --bg: #241B14;
+  --surface: #2F241A;
+  --surface-raised: #3A2C1E;
+  --border: #4A3826;
+
+  --flame: #F2622E;
+  --flame-dark: #C1272D;
+  --gold: #F6B93B;
+
+  --text: #FBF4EA;
+  --text-muted: #C9B8A6;
+  --text-on-flame: #241B14;
+
+  --radius-lg: 22px 6px 22px 6px;
+  --radius-md: 14px 4px;
+  --radius-pill: 999px;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 14px;
+  --space-4: 22px;
+  --space-5: 34px;
+
+  --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-head: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+* { box-sizing: border-box; }
+
+html {
+  height: 100%;
+  scroll-padding-top: var(--safe-top);
+}
+
+body {
+  margin: 0;
+  min-height: 100%;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  line-height: 1.45;
+  padding-top: var(--safe-top);
+  padding-bottom: var(--safe-bottom);
+}
+
+h1, h2, h3 {
+  font-family: var(--font-head);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  margin: 0 0 var(--space-2);
+}
+
+h1 { font-size: 1.5rem; }
+h2 { font-size: 1.15rem; }
+h3 { font-size: 1rem; color: var(--gold); }
+
+p { color: var(--text-muted); margin: 0 0 var(--space-3); }
+
+button, input, select, textarea { font-family: inherit; }
+
+a { color: var(--gold); }
+
+/* ---------- App bar ---------- */
+
+.app-bar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-3) var(--space-4);
+  background: linear-gradient(180deg, var(--surface) 0%, rgba(47,36,26,0.94) 100%);
+  border-bottom: 1px solid var(--border);
+}
+
+.app-bar__brand {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  font-weight: 800;
+  font-size: 1.2rem;
+}
+
+.app-bar__brand small {
+  color: var(--flame);
+  font-weight: 800;
+}
+
+.burger {
+  width: 42px;
+  height: 42px;
+  border: none;
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.burger span {
+  width: 24px;
+  height: 3px;
+  background: var(--text);
+  border-radius: var(--radius-pill);
+  transition: transform .25s ease, opacity .2s ease, width .2s ease;
+}
+.burger span:nth-child(2) { width: 17px; background: var(--flame); }
+
+.burger[aria-expanded="true"] span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+.burger[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.burger[aria-expanded="true"] span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); width: 24px; }
+
+/* ---------- Menu latéral (sandwich, ouverture à droite) ---------- */
+
+.menu-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 10, 6, 0.55);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .25s ease;
+  z-index: 30;
+}
+.menu-overlay.is-open { opacity: 1; pointer-events: auto; }
+
+.menu-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: min(84vw, 320px);
+  background: var(--surface);
+  border-left: 1px solid var(--border);
+  transform: translateX(100%);
+  transition: transform .28s cubic-bezier(.32,.72,0,1);
+  z-index: 31;
+  padding: calc(var(--space-4) + var(--safe-top)) var(--space-4) var(--space-4);
+  overflow-y: auto;
+}
+.menu-panel.is-open { transform: translateX(0); }
+
+.menu-panel h2 { margin-bottom: var(--space-4); }
+
+.menu-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; }
+
+.menu-list button {
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  color: var(--text);
+  padding: 13px var(--space-2);
+  font-size: 1rem;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  cursor: pointer;
+}
+.menu-list button:hover, .menu-list button:focus-visible { background: var(--surface-raised); }
+.menu-list button .ico { font-size: 1.15rem; }
+
+.menu-list .divider { height: 1px; background: var(--border); margin: var(--space-3) 0; }
+
+/* ---------- Layout principal ---------- */
+
+main {
+  padding: var(--space-4);
+  max-width: 640px;
+  margin: 0 auto;
+  padding-bottom: calc(var(--space-5) + var(--safe-bottom));
+}
+
+.view { display: none; }
+.view.is-active { display: block; }
+
+/* ---------- Hero ---------- */
+
+.hero {
+  background: linear-gradient(135deg, var(--flame) 0%, var(--flame-dark) 100%);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  color: var(--text-on-flame);
+  margin-bottom: var(--space-4);
+}
+.hero h1 { color: var(--text-on-flame); }
+.hero p { color: rgba(36,27,20,0.75); }
+.hero .tag {
+  display: inline-block;
+  background: rgba(36,27,20,0.16);
+  color: var(--text-on-flame);
+  font-weight: 700;
+  font-size: 0.78rem;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  margin-bottom: var(--space-2);
+}
+
+/* ---------- Cartes ---------- */
+
+.card {
+  background: var(--surface);
+  border-left: 4px solid var(--gold);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  margin-bottom: var(--space-3);
+}
+.card--flame { border-left-color: var(--flame); }
+.card--muted { border-left-color: var(--border); }
+
+.card-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.action-btn {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  color: var(--text);
+  cursor: pointer;
+  text-align: left;
+}
+.action-btn strong { font-size: 1rem; }
+.action-btn span { color: var(--text-muted); font-size: 0.85rem; }
+.action-btn:hover { border-color: var(--flame); }
+
+/* ---------- Boutons ---------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 20px;
+  border-radius: var(--radius-pill);
+  border: none;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+.btn--primary { background: var(--flame); color: var(--text-on-flame); }
+.btn--ghost { background: transparent; border: 1px solid var(--border); color: var(--text); }
+.btn--block { width: 100%; }
+.btn-row { display: flex; gap: var(--space-2); flex-wrap: wrap; }
+
+/* ---------- Formulaires (réglages) ---------- */
+
+.field { margin-bottom: var(--space-3); }
+.field label { display: block; font-size: 0.85rem; color: var(--text-muted); margin-bottom: 5px; }
+.field input[type="text"],
+.field input[type="number"],
+.field select,
+.field textarea {
+  width: 100%;
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 11px var(--space-2);
+  border-radius: 10px;
+  font-size: 0.95rem;
+}
+.field textarea { min-height: 72px; resize: vertical; }
+
+.checkgrid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-2); }
+.check-item {
+  display: flex; align-items: center; gap: 8px;
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.range-item { margin-bottom: var(--space-3); }
+.range-item .range-head { display: flex; justify-content: space-between; font-size: 0.88rem; margin-bottom: 4px; }
+.range-item .range-head b { color: var(--gold); }
+.range-item input[type="range"] { width: 100%; accent-color: var(--flame); }
+
+.section-title {
+  display: flex; align-items: center; justify-content: space-between;
+  margin: var(--space-5) 0 var(--space-3);
+}
+
+.empty-state {
+  text-align: center;
+  padding: var(--space-5) var(--space-3);
+  color: var(--text-muted);
+}
+.empty-state .ico { font-size: 2rem; display: block; margin-bottom: var(--space-2); }
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: calc(24px + var(--safe-bottom));
+  transform: translate(-50%, 20px);
+  background: var(--surface-raised);
+  border: 1px solid var(--flame);
+  color: var(--text);
+  padding: 12px 18px;
+  border-radius: var(--radius-pill);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform .2s ease, opacity .2s ease;
+  z-index: 50;
+  font-size: 0.9rem;
+}
+.toast.is-visible { opacity: 1; transform: translate(-50%, 0); }
+
+@media (prefers-reduced-motion: reduce) {
+  .menu-panel, .menu-overlay, .burger span, .toast { transition: none; }
+}

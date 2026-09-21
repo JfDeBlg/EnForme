@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "programmes": [
+    {
+      "id": "prog-golf-express",
+      "nom": "Golf Express — Puissance & Rotation",
+      "objectifPrincipal": "golf",
+      "dureeMin": 20,
+      "description": "Séance courte centrée sur la puissance de rotation et la stabilité du tronc, cœur de cible pour le swing.",
+      "exercices": ["ex-worldsgreateststretch", "ex-openbook", "ex-pallof", "ex-bandrotation", "ex-deadbug", "ex-glutebridge"]
+    },
+    {
+      "id": "prog-mobilite-matin",
+      "nom": "Mobilité du matin",
+      "objectifPrincipal": "souplesse",
+      "dureeMin": 12,
+      "description": "Réveil articulaire doux : hanches, dos, épaules. Idéal avant une matinée assise ou avant de jouer.",
+      "exercices": ["ex-catcow", "ex-90-90", "ex-openbook", "ex-worldsgreateststretch", "ex-shoulderband"]
+    },
+    {
+      "id": "prog-renfo-complet",
+      "nom": "Renforcement complet",
+      "objectifPrincipal": "force",
+      "dureeMin": 30,
+      "description": "Séance de fond : bas du corps, dos, gainage. Base physique commune à tous vos sports.",
+      "exercices": ["ex-gobletsquat", "ex-rowelastique", "ex-glutebridge", "ex-birddog", "ex-sideplank", "ex-lungerotation"]
+    },
+    {
+      "id": "prog-cardio-fractionne",
+      "nom": "Cardio fractionné (elliptique)",
+      "objectifPrincipal": "endurance",
+      "dureeMin": 25,
+      "description": "Endurance générale et cardio-vasculaire — le carburant pour tenir 18 trous ou une session de voile/kite.",
+      "exercices": ["ex-elliptique-fractionne", "ex-catcow-mat-souplesse"]
+    },
+    {
+      "id": "prog-glisse-stabilite",
+      "nom": "Stabilité glisse (voile / kite / ski)",
+      "objectifPrincipal": "voile",
+      "dureeMin": 18,
+      "description": "Gainage anti-rotation et endurance d'épaules, utiles à la traction en voile/kite et à la position basse en ski.",
+      "exercices": ["ex-pallof", "ex-sideplank", "ex-shoulderband", "ex-birddog", "ex-90-90"]
+    }
+  ]
+}
