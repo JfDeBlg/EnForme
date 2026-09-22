@@ -233,6 +233,12 @@ const App = {
   /* ---------------- Nouvel entraînement ---------------- */
 
   renderNouvelEntrainement() {
+    this.customDuration = this.customDuration || 25;
+    this.renderProgrammesList();
+    this.renderCustomSessionCard();
+  },
+
+  renderProgrammesList() {
     const wrap = document.getElementById("programmes-list");
     wrap.innerHTML = "";
     this.programmes.forEach((prog) => {
@@ -245,6 +251,113 @@ const App = {
       card.addEventListener("click", () => this.startSession(prog));
       wrap.appendChild(card);
     });
+  },
+
+  /* --- Séance sur-mesure (générée à partir des curseurs d'objectifs du profil) --- */
+
+  topObjectifs(n = 2) {
+    return Object.entries(this.profile.objectifs)
+      .filter(([, v]) => v > 0)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, n)
+      .map(([k]) => k);
+  },
+
+  scoreExercise(ex) {
+    const objectifs = this.profile.objectifs;
+    return ex.objectifs.reduce((sum, o) => sum + (objectifs[o] || 0), 0);
+  },
+
+  exerciseMaterielOk(ex) {
+    const dispo = this.profile.materielDispo || [];
+    if (!dispo.length) return true; // pas de filtre matériel si rien n'est coché
+    return ex.materiel.every((m) => dispo.includes(m));
+  },
+
+  targetExerciseCount(durationMin) {
+    return Math.max(3, Math.min(8, Math.round(durationMin / 4)));
+  },
+
+  /** Tirage pondéré sans remise : plus le score est élevé, plus l'exercice a de chances d'être choisi. */
+  weightedSample(scoredPool, n) {
+    const pool = scoredPool.slice();
+    const chosen = [];
+    for (let i = 0; i < n && pool.length; i++) {
+      const totalWeight = pool.reduce((s, e) => s + e.score + 1, 0);
+      let r = Math.random() * totalWeight;
+      let idx = 0;
+      for (; idx < pool.length; idx++) {
+        r -= pool[idx].score + 1;
+        if (r <= 0) break;
+      }
+      chosen.push(pool.splice(Math.min(idx, pool.length - 1), 1)[0]);
+    }
+    return chosen;
+  },
+
+  generateCustomSelection(durationMin) {
+    let candidates = Object.values(this.exercisesById).filter((ex) => this.exerciseMaterielOk(ex));
+    if (candidates.length === 0) candidates = Object.values(this.exercisesById); // filet de sécurité
+    const scored = candidates.map((ex) => ({ ex, score: this.scoreExercise(ex) }));
+    scored.sort((a, b) => b.score - a.score);
+
+    const count = this.targetExerciseCount(durationMin);
+    const poolSize = Math.min(scored.length, count * 2 + 2);
+    const pool = scored.slice(0, poolSize);
+    const chosen = this.weightedSample(pool, Math.min(count, pool.length));
+    return chosen.map((c) => c.ex.id);
+  },
+
+  renderCustomSessionCard() {
+    const top = this.topObjectifs(2);
+    const subtitleEl = document.getElementById("custom-session-subtitle");
+    subtitleEl.textContent = top.length
+      ? `Basée sur vos priorités actuelles : ${top.map((k) => OBJECTIF_LABELS[k]).join(" et ")}.`
+      : "Réglez vos priorités dans Réglages pour personnaliser cette séance.";
+
+    document.querySelectorAll("#custom-duration-chips [data-duree]").forEach((chip) => {
+      chip.classList.toggle("is-active", Number(chip.dataset.duree) === this.customDuration);
+      chip.onclick = () => {
+        this.customDuration = Number(chip.dataset.duree);
+        this.regenerateCustomSession();
+      };
+    });
+
+    if (!this.customExerciceIds || !this.customExerciceIds.length) {
+      this.regenerateCustomSession();
+    } else {
+      this.renderCustomSessionPreview();
+    }
+
+    document.getElementById("btn-custom-regenerate").onclick = () => this.regenerateCustomSession();
+    document.getElementById("btn-custom-start").onclick = () => this.startCustomSession();
+  },
+
+  regenerateCustomSession() {
+    this.customExerciceIds = this.generateCustomSelection(this.customDuration);
+    this.renderCustomSessionCard();
+  },
+
+  renderCustomSessionPreview() {
+    document.querySelectorAll("#custom-duration-chips [data-duree]").forEach((chip) => {
+      chip.classList.toggle("is-active", Number(chip.dataset.duree) === this.customDuration);
+    });
+    const names = this.customExerciceIds.map((id) => this.exercisesById[id].nom);
+    document.getElementById("custom-session-preview").innerHTML = names
+      .map((n) => `<div style="color:var(--text-muted); font-size:0.9rem;">• ${n}</div>`)
+      .join("");
+  },
+
+  startCustomSession() {
+    const top = this.topObjectifs(1);
+    const program = {
+      id: "custom-" + Date.now(),
+      nom: "Séance sur-mesure",
+      objectifPrincipal: top[0] || "golf",
+      dureeMin: this.customDuration,
+      exercices: this.customExerciceIds,
+    };
+    this.startSession(program);
   },
 
   startSession(programme) {

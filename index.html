@@ -71,7 +71,24 @@
   <!-- NOUVEL ENTRAINEMENT -->
   <section class="view" id="view-nouvel-entrainement">
     <h1>Nouvel entraînement</h1>
-    <p>Choisissez un programme selon votre objectif du jour.</p>
+
+    <div class="card card--flame" id="custom-session-card">
+      <h3>🎯 Séance sur-mesure</h3>
+      <p id="custom-session-subtitle" style="margin-top:-4px;"></p>
+      <div class="chip-row" id="custom-duration-chips">
+        <button class="chip" data-duree="15">15 min</button>
+        <button class="chip" data-duree="25">25 min</button>
+        <button class="chip" data-duree="35">35 min</button>
+      </div>
+      <div id="custom-session-preview" style="margin:10px 0;"></div>
+      <div class="btn-row">
+        <button class="btn btn--ghost" id="btn-custom-regenerate">🔀 Régénérer</button>
+        <button class="btn btn--primary" id="btn-custom-start">Commencer</button>
+      </div>
+    </div>
+
+    <div class="section-title"><h3>Programmes prédéfinis</h3></div>
+    <p style="margin-top:-8px;">Des enchaînements fixes, pour une routine plus prévisible.</p>
     <div id="programmes-list"></div>
   </section>
 

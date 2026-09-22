@@ -50,6 +50,9 @@ Tableau d'entrées `{ date, programmeId, programmeNom, nbExercices, ressenti }`,
 ### Séance en cours (`Store.getOngoingSession()` / `enforme:ongoing-session`)
 `{ programmeId, programmeNom, startedAt, exerciceIndex, exercices[] }`. Sauvegardée à chaque changement d'exercice, ce qui permet la reprise exacte.
 
+### Séance sur-mesure (générée, pas de persistance dédiée)
+Fonctions clés dans `js/app.js` : `topObjectifs()`, `scoreExercise()`, `exerciseMaterielOk()`, `targetExerciseCount()`, `weightedSample()`, `generateCustomSelection()`. La sélection courante vit dans `App.customExerciceIds` (recalculée à chaque changement de durée ou clic sur "Régénérer"), et n'est persistée qu'une fois la séance démarrée (via le mécanisme normal de "séance en cours").
+
 ## Conventions de code
 
 - Français pour tout ce qui est visible par l'utilisateur (UI, données) ; identifiants techniques (variables, fonctions, clés JSON) en anglais/français mixte existant, rester cohérent avec l'existant plutôt que de tout renommer.
@@ -71,6 +74,7 @@ Chaque évolution significative doit :
 - **V1.1** : minuteur intégré (`js/timer.js`, trois types de config : `attente`, `intervalle`, `duree` — voir champ `timer` dans `exercises.json`), sans dépendance externe (bip via Web Audio, vibration via `navigator.vibrate`).
 - **V1.2** : bibliothèque d'exercices consultable (`view-bibliotheque`), filtrage par objectif/matériel + recherche texte, détail en panneau superposé (`.detail-overlay`). À cette occasion, correction de données : les `objectifs[]` des exercices ne portaient que les tags sport (golf/ski/voile/kite), sans `souplesse`/`force`/`endurance` — corrigé via une règle `categorie → objectif` dans `tools/generate_diagrams.py`'s voisin (voir historique git) pour rester cohérent avec les curseurs du profil.
 - **V1.3** : pictogrammes SVG par exercice (`js/diagrams.js`, généré par `tools/generate_diagrams.py`). Convention : trait or = posture, trait flamme = segment qui travaille, pointillés = élastique/trajectoire. **Ne pas éditer `js/diagrams.js` à la main** : modifier les coordonnées dans le script Python et relancer `python3 tools/generate_diagrams.py`, pour garder les deux fichiers synchronisés.
+- **V1.4** : génération dynamique de séance ("Séance sur-mesure") — voir section dédiée du README pour l'algorithme (filtrage matériel, score = somme des pondérations d'objectifs, tirage pondéré sans remise). Le résultat est encapsulé dans un objet ayant la même forme qu'un `programme` de `programmes.json` (`{id, nom, objectifPrincipal, dureeMin, exercices}`), ce qui lui permet de traverser `App.startSession()` sans code spécifique.
 
 ## Notes techniques utiles pour la suite
 

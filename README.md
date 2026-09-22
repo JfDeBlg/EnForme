@@ -48,13 +48,27 @@ enforme/
 
 ## Fonctionnalités (V0)
 
-- **Menu sandwich** (ouverture à droite) : Réglages, Nouvel entraînement, Reprendre un entraînement, Historique, Statistiques.
+- **Menu sandwich** (ouverture à droite) : Réglages, Nouvel entraînement, Reprendre un entraînement, Bibliothèque d'exercices, Historique, Statistiques.
 - **Réglages** : profil du pratiquant (âge, sexe, niveau, blessures, fréquence visée), matériel disponible, curseurs de pondération par objectif (golf en priorité par défaut), export/import JSON, effacement des données.
-- **Nouvel entraînement** : choix parmi 5 programmes prédéfinis (Golf Express, Mobilité du matin, Renforcement complet, Cardio fractionné, Stabilité glisse), chacun basé sur les objectifs et le matériel disponible.
-- **Séance guidée** : un exercice à la fois (description, consignes, format séries/reps, lien de recherche vidéo YouTube), progression sauvegardée en continu.
+- **Nouvel entraînement** :
+  - **Séance sur-mesure** (générée dynamiquement à partir des curseurs d'objectifs du profil et du matériel disponible — voir "Génération dynamique" ci-dessous).
+  - 5 programmes prédéfinis (Golf Express, Mobilité du matin, Renforcement complet, Cardio fractionné, Stabilité glisse).
+- **Séance guidée** : un exercice à la fois (schéma, description, consignes, format séries/reps ou minuteur, lien de recherche vidéo YouTube), progression sauvegardée en continu.
+- **Bibliothèque d'exercices** : consultation libre (hors séance), filtrable par objectif et matériel, avec recherche texte.
+- **Minuteur intégré** pour les exercices chronométrés (maintiens avec alternance de côté, intervalles effort/repos, durée simple), avec bip sonore et vibration.
 - **Reprendre un entraînement** : reprend une séance interrompue exactement où elle s'est arrêtée.
 - **Historique** : liste des séances effectuées avec ressenti.
 - **Statistiques** : nombre de séances (total, 7 derniers jours), répartition par objectif.
+
+## Génération dynamique de séance ("Séance sur-mesure")
+
+Plutôt que de piocher uniquement parmi les 5 programmes fixes, la carte "🎯 Séance sur-mesure" (en haut de "Nouvel entraînement") compose une séance à la volée :
+1. **Filtrage matériel** : seuls les exercices entièrement réalisables avec le matériel coché en Réglages sont candidats.
+2. **Score par exercice** : somme des pondérations du profil (`objectifs.golf`, `.souplesse`, etc.) pour chaque objectif porté par l'exercice — un exercice tagué `golf`+`force` avec golf à 70 % et force à 40 % obtient un score de 110.
+3. **Nombre d'exercices** : dérivé de la durée choisie (15/25/35 min), environ 1 exercice pour 4 minutes.
+4. **Tirage pondéré sans remise** parmi les meilleurs candidats (pool = 2× le nombre cible), pour privilégier vos priorités tout en gardant de la variété d'une séance à l'autre — d'où le bouton "🔀 Régénérer".
+
+Modifier les curseurs d'objectifs en Réglages change donc directement la composition des séances sur-mesure.
 
 ## Contenu des exercices
 
@@ -69,7 +83,7 @@ Voir aussi `CLAUDE.md` pour le contexte destiné à un futur développeur (humai
 - [x] Minuteur intégré pour les exercices chronométrés (gainage, étirements, fractionné)
 - [x] Bibliothèque d'exercices consultable librement (hors séance), avec filtres objectif/matériel/recherche
 - [x] Schémas SVG (pictogrammes) par exercice, générés par `tools/generate_diagrams.py`
-- [ ] Programmes générés dynamiquement à partir des curseurs d'objectifs du profil (au lieu de programmes fixes) — en cours
+- [x] Programmes générés dynamiquement à partir des curseurs d'objectifs du profil ("Séance sur-mesure")
 - [ ] Vidéos curées (liens directs vérifiés) pour les exercices prioritaires golf
 - [ ] Graphiques de progression plus riches (tendance dans le temps)
 - [ ] Rappel/notification locale pour respecter la fréquence hebdomadaire visée
