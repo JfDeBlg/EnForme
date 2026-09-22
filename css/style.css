@@ -429,8 +429,9 @@ main {
   margin-bottom: var(--space-3);
 }
 .diagram svg {
-  width: 120px;
-  height: 120px;
+  width: 100%;
+  max-width: 260px;
+  height: auto;
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -12,6 +12,17 @@ def polyline(pts,color=GOLD,w=6):
     d = " ".join(f"{x:.1f},{y:.1f}" for x,y in pts)
     return f'<polyline points="{d}" stroke="{color}" stroke-width="{w}" fill="none" stroke-linecap="round" stroke-linejoin="round"/>'
 
+def label(x,y,text,color="#C9B8A6"):
+    return f'<text x="{x}" y="{y}" text-anchor="middle" font-size="13" font-family="sans-serif" fill="{color}">{text}</text>'
+
+def step_arrow(x1,y,x2,color="#C9B8A6"):
+    return (f'<line x1="{x1}" y1="{y}" x2="{x2-6}" y2="{y}" stroke="{color}" stroke-width="3" stroke-linecap="round"/>'
+            f'<polygon points="{x2-10},{y-7} {x2},{y} {x2-10},{y+7}" fill="{color}"/>')
+
+def wrap_two(*parts):
+    """Variante large pour les pictogrammes à deux poses (Départ -> Fin)."""
+    return f'<svg viewBox="0 0 260 130" xmlns="http://www.w3.org/2000/svg" fill="none">{"".join(parts)}</svg>'
+
 def head(cx,cy,r=9):
     return f'<circle cx="{cx:.1f}" cy="{cy:.1f}" r="{r}" fill="{CREAM}" stroke="{FLAME}" stroke-width="3"/>'
 
@@ -32,15 +43,23 @@ def wrap(*parts):
 
 diagrams = {}
 
-# 1. Bird Dog — quadruped, bras + jambe opposés tendus (tête bien séparée de l'extension)
-diagrams["ex-birddog"] = wrap(
-    ground(100),
-    line(78,50,45,66),                  # torse (épaule -> hanche)
-    head(78,30),
-    line(78,50,80,82),                  # bras d'appui (proche)
-    line(45,66,45,96),                  # jambe d'appui (proche)
-    line(78,50,108,38, FLAME, 6),       # bras tendu vers l'avant
-    line(45,66,18,82, FLAME, 6),        # jambe tendue vers l'arrière
+# 1. Bird Dog — pictogramme deux poses : Départ (quadrupédie neutre) -> Fin (extension opposée)
+diagrams["ex-birddog"] = wrap_two(
+    ground(100,5,105), ground(100,155,255),
+    step_arrow(112,55,148),
+    # Départ (tout en or : posture neutre, symétrique, dos plat)
+    line(70,45,35,60, GOLD, 6),
+    head(78,32, 9),
+    line(70,45,70,88, GOLD, 6),
+    line(35,60,35,96, GOLD, 6),
+    label(55,120,"Départ"),
+    # Fin (bras + jambe opposés tendus en flamme, jambe d'appui restée au sol)
+    line(220,45,188,60, GOLD, 6),
+    head(228,32, 9),
+    line(188,60,188,96, GOLD, 6),
+    line(220,45,250,25, FLAME, 6),
+    line(188,60,152,53, FLAME, 6),
+    label(205,120,"Fin"),
 )
 
 # 2. Dead Bug — allongé dos au sol, bras/jambe opposés en l'air
@@ -164,14 +183,22 @@ diagrams["ex-sideplank"] = wrap(
     ground(100,15,70),
 )
 
-# 13. Chat-Vache — quadruped, dos arrondi (courbe), tête basse, 2 appuis verticaux
-diagrams["ex-catcow"] = wrap(
-    ground(100),
-    f'<path d="M40,62 Q60,40 80,58" stroke="{GOLD}" stroke-width="7" fill="none" stroke-linecap="round"/>',
-    arc(60,50,26,200,340, FLAME, 3, "3 5"),
-    head(88,68),
-    line(40,62,40,96),                  # jambe arrière d'appui
-    line(80,58,80,92),                  # jambe avant d'appui
+# 13. Chat-Vache — pictogramme deux poses : Chat (dos rond, tête basse) -> Vache (dos creux, tête haute)
+diagrams["ex-catcow"] = wrap_two(
+    ground(100,5,105), ground(100,155,255),
+    step_arrow(112,55,148),
+    # Chat : dos arrondi vers le haut, tête rentrée basse
+    f'<path d="M70,55 Q52,36 35,60" stroke="{GOLD}" stroke-width="7" fill="none" stroke-linecap="round"/>',
+    head(80,70, 9),
+    line(70,55,70,90, GOLD, 6),
+    line(35,60,35,92, GOLD, 6),
+    label(55,120,"Chat"),
+    # Vache : dos creusé vers le bas, tête relevée
+    f'<path d="M220,55 Q202,74 185,60" stroke="{GOLD}" stroke-width="7" fill="none" stroke-linecap="round"/>',
+    head(230,38, 9),
+    line(220,55,220,90, GOLD, 6),
+    line(185,60,185,92, GOLD, 6),
+    label(205,120,"Vache"),
 )
 
 # 14. Rotation externe épaule (élastique)
