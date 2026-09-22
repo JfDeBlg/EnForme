@@ -62,125 +62,168 @@ diagrams["ex-birddog"] = wrap_two(
     label(205,120,"Fin"),
 )
 
-# 2. Dead Bug — allongé dos au sol, bras/jambe opposés en l'air
-diagrams["ex-deadbug"] = wrap(
-    ground(100),
-    line(30,100,80,100, GOLD, 8),       # dos au sol (torse)
-    head(22,100),
-    line(80,100,100,80, FLAME, 6),      # jambe levée
-    line(45,100,30,60, FLAME, 6),       # bras levé opposé
-    line(45,100,60,100),                # autre jambe pliée posée
-    line(60,100,60,88),
-    line(65,100,90,95),                 # autre bras posé
+# 2. Dead Bug — Départ (bras/genou pliés vers le plafond) -> Fin (bras/jambe opposés tendus)
+diagrams["ex-deadbug"] = wrap_two(
+    line(15,95,55,95, GOLD, 8), head(9,95,9),
+    line(35,95,30,62, GOLD, 6),         # bras plié vers le plafond
+    line(55,95,68,70, GOLD, 6), line(68,70,90,68, GOLD, 5),  # genou plié (tabletop)
+    label(55,120,"Départ"),
+    line(165,95,205,95, GOLD, 8), head(159,95,9),
+    line(180,95,150,60, FLAME, 6),      # bras tendu
+    line(205,95,240,80, FLAME, 6),      # jambe tendue (opposée)
+    label(205,120,"Fin"),
 )
 
-# 3. Pallof Press — debout, bras poussés devant, élastique de côté
-diagrams["ex-pallof"] = wrap(
-    ground(108),
-    line(60,42,60,78),                  # torse
-    head(60,32),
-    line(60,78,50,106),                 # jambe
-    line(60,78,70,106),                 # jambe
-    line(60,50,95,50, FLAME, 6),        # bras tendus devant
-    line(20,50,60,50, MUTED, 3),        # élastique
+# 3. Pallof Press — Départ (mains ramenées au sternon) -> Fin (bras poussés devant, flamme)
+diagrams["ex-pallof"] = wrap_two(
+    ground(106,5,105), ground(106,155,255),
+    step_arrow(112,55,148),
+    line(60,42,60,78, GOLD, 6), head(60,32,9),
+    line(60,78,50,106, GOLD, 6), line(60,78,70,106, GOLD, 6),
+    line(60,58,50,58, GOLD, 5),         # mains au sternon
+    line(20,58,50,58, MUTED, 3),        # élastique détendu
+    label(55,122,"Départ"),
+    line(210,42,210,78, GOLD, 6), head(210,32,9),
+    line(210,78,200,106, GOLD, 6), line(210,78,220,106, GOLD, 6),
+    line(210,58,245,58, FLAME, 6),      # bras poussés devant
+    line(170,58,210,58, MUTED, 3),      # élastique tendu
+    label(205,122,"Fin"),
 )
 
-# 4. Rotation élastique golfique (chop)
-diagrams["ex-bandrotation"] = wrap(
-    ground(108),
-    line(60,44,60,78),
-    head(60,34),
-    line(60,78,48,106),
-    line(60,78,74,106),
-    line(60,55,92,38, FLAME, 6),        # bras tendus tournés vers un côté
-    arc(60,55,26,180,260),
-    line(18,90,40,55, MUTED, 3),        # élastique ancré au sol
+# 4. Rotation élastique golfique (chop) — Départ (bras bas d'un côté) -> Fin (bras hauts, tournés)
+diagrams["ex-bandrotation"] = wrap_two(
+    ground(106,5,105), ground(106,155,255),
+    step_arrow(112,55,148),
+    line(60,44,60,78, GOLD, 6), head(60,34,9),
+    line(60,78,48,106, GOLD, 6), line(60,78,74,106, GOLD, 6),
+    line(60,70,42,80, GOLD, 5),         # bras/élastique tenus bas
+    line(15,95,42,80, MUTED, 3),
+    label(55,122,"Départ"),
+    line(210,44,210,78, GOLD, 6), head(210,34,9),
+    line(210,78,198,106, GOLD, 6), line(210,78,222,106, GOLD, 6),
+    line(210,55,242,38, FLAME, 6),      # bras tournés et levés
+    arc(210,55,24,300,20),
+    line(165,95,192,80, MUTED, 3),
+    label(205,122,"Fin"),
 )
 
-# 5. Fente avec rotation thoracique
-diagrams["ex-lungerotation"] = wrap(
-    ground(108),
-    line(55,45,58,72),                  # torse
-    head(53,35),
-    line(58,72,40,108),                 # jambe avant (fente)
-    line(58,72,80,95),
-    line(80,95,88,108),                 # jambe arrière
-    line(58,55,78,42, FLAME, 6),        # bras/rotation vers l'avant
-    arc(58,55,20,300,20),
+# 5. Fente avec rotation thoracique — Départ (mains jointes, face avant) -> Fin (buste tourné, flamme)
+diagrams["ex-lungerotation"] = wrap_two(
+    ground(108,5,105), ground(108,155,255),
+    step_arrow(112,55,148),
+    line(55,45,58,72, GOLD, 6), head(53,35,9),
+    line(58,72,40,108, GOLD, 6),
+    line(58,72,80,95, GOLD, 5), line(80,95,88,108, GOLD, 5),
+    dot(58,50,4,GOLD),                  # mains jointes devant
+    label(55,122,"Départ"),
+    line(205,45,208,72, GOLD, 6), head(203,35,9),
+    line(208,72,190,108, GOLD, 6),
+    line(208,72,230,95, GOLD, 5), line(230,95,238,108, GOLD, 5),
+    line(208,55,235,40, FLAME, 6),      # buste/bras tournés
+    arc(208,55,20,300,20),
+    label(205,122,"Fin"),
 )
 
-# 6. World's Greatest Stretch — grand fendu + ouverture bras
-diagrams["ex-worldsgreateststretch"] = wrap(
-    ground(108),
-    line(35,108,70,80),                 # jambe avant fendue
-    line(70,80,95,108),                 # jambe arrière tendue
-    line(70,80,66,52),                  # torse
-    head(64,42),
-    line(70,60,45,72, MUTED, 4),        # main au sol
-    line(66,55,95,30, FLAME, 6),        # bras ouvert vers le ciel
-    arc(66,55,28,270,330),
+# 6. World's Greatest Stretch — Départ (main au sol) -> Fin (bras ouvert vers le ciel, flamme)
+diagrams["ex-worldsgreateststretch"] = wrap_two(
+    ground(108,5,105), ground(108,155,255),
+    step_arrow(112,55,148),
+    line(35,108,70,80, GOLD, 6), line(70,80,95,108, GOLD, 6),
+    line(70,80,66,52, GOLD, 6), head(64,42,9),
+    line(70,60,50,72, GOLD, 4),         # main au sol
+    label(55,122,"Départ"),
+    line(185,108,220,80, GOLD, 6), line(220,80,245,108, GOLD, 6),
+    line(220,80,216,52, GOLD, 6), head(214,42,9),
+    line(216,55,245,28, FLAME, 6),      # bras ouvert vers le ciel
+    arc(216,55,26,270,330),
+    label(205,122,"Fin"),
 )
 
-# 7. Ouverture de livre (T-spine) — allongé sur le côté, genoux pliés, un bras qui s'ouvre
-diagrams["ex-openbook"] = wrap(
-    line(40,55,75,55, GOLD, 7),         # torse allongé sur le côté
-    head(85,55),
-    polyline([(40,55),(60,68),(58,88)], GOLD, 6),  # hanche -> genou -> pied (jambes pliées)
-    line(75,55,75,80, MUTED, 4),        # bras du dessous, posé au sol
-    line(75,55,100,25, FLAME, 6),       # bras du dessus qui s'ouvre
-    arc(75,55,30,270,320),
+# 7. Ouverture de livre (T-spine) — Départ (bras joints devant) -> Fin (bras du dessus ouvert, flamme)
+diagrams["ex-openbook"] = wrap_two(
+    line(15,55,50,55, GOLD, 7), head(60,55,9),
+    polyline([(15,55),(35,68),(33,88)], GOLD, 6),
+    line(50,55,68,60, GOLD, 5),         # bras joints devant, fermé
+    label(35,110,"Départ"),
+    line(165,55,200,55, GOLD, 7), head(210,55,9),
+    polyline([(165,55),(185,68),(183,88)], GOLD, 6),
+    line(200,55,200,80, GOLD, 4),       # bras du dessous, au sol
+    line(200,55,235,25, FLAME, 6),      # bras du dessus qui s'ouvre
+    arc(200,55,28,280,330),
+    label(195,110,"Fin"),
 )
 
-# 8. Étirement hanche 90/90
-diagrams["ex-90-90"] = wrap(
-    ground(108),
-    line(40,108,65,95),                 # jambe avant pliée 90°
-    line(65,95,90,108),
-    line(40,108,25,90),                 # jambe côté pliée 90°
-    line(65,95,60,65),                  # torse penché sur jambe avant
-    head(53,55, 8),
-    line(60,72,42,85, FLAME, 5),        # bras vers jambe avant
+# 8. Étirement hanche 90/90 — Départ (buste droit) -> Fin (penché sur la jambe avant, flamme)
+diagrams["ex-90-90"] = wrap_two(
+    ground(108,5,105), ground(108,155,255),
+    step_arrow(112,55,148),
+    line(40,108,65,95, GOLD, 6), line(65,95,90,108, GOLD, 6),
+    line(40,108,25,90, GOLD, 5),
+    line(60,65,63,90, GOLD, 6), head(58,55,8),
+    label(55,122,"Départ"),
+    line(190,108,215,95, GOLD, 6), line(215,95,240,108, GOLD, 6),
+    line(190,108,175,90, GOLD, 5),
+    line(213,72,220,95, FLAME, 6), head(206,63,8),  # buste penché sur la jambe avant
+    label(205,122,"Fin"),
 )
 
-# 9. Pont fessier — chaîne continue épaule/sol -> hanche levée -> genou -> pied/sol
-diagrams["ex-glutebridge"] = wrap(
-    ground(104),
-    head(12,100),
-    line(20,100,35,100),                # épaule au sol
-    polyline([(35,100),(58,78),(85,88),(85,104)], FLAME, 6),  # hanche levée -> genou -> pied
+# 9. Pont fessier — Départ (bassin au sol) -> Fin (hanches levées, flamme)
+diagrams["ex-glutebridge"] = wrap_two(
+    ground(104,5,105), ground(104,155,255),
+    step_arrow(112,55,148),
+    head(12,100,9),
+    line(20,100,60,100, GOLD, 6),       # à plat, bassin au sol
+    line(60,100,60,80, GOLD, 5),
+    label(55,122,"Départ"),
+    head(162,100,9),
+    line(170,100,193,78, FLAME, 6),     # hanche levée
+    polyline([(193,78),(220,88),(220,104)], FLAME, 6),
+    label(205,122,"Fin"),
 )
 
-# 10. Squat gobelet (haltères)
-diagrams["ex-gobletsquat"] = wrap(
-    ground(108),
-    line(60,45,60,75),                  # torse droit
-    head(60,35),
-    line(60,75,42,108),                 # cuisse pliée
-    line(42,108,42,90),
-    line(60,75,78,108),
-    line(78,108,78,90),
-    line(50,58,70,58, FLAME, 8),        # haltère tenu devant la poitrine
+# 10. Squat gobelet (haltères) — Départ (debout) -> Fin (position basse, flamme)
+diagrams["ex-gobletsquat"] = wrap_two(
+    ground(108,5,105), ground(108,155,255),
+    step_arrow(112,55,148),
+    line(60,42,60,72, GOLD, 6), head(60,32,9),
+    line(60,72,48,108, GOLD, 6), line(60,72,72,108, GOLD, 6),
+    line(50,55,70,55, GOLD, 7),         # haltère tenu haut
+    label(55,122,"Départ"),
+    line(210,58,210,80, FLAME, 6), head(210,48,9),
+    line(210,80,192,108, FLAME, 6), line(192,108,192,92, FLAME, 5),
+    line(210,80,228,108, FLAME, 6), line(228,108,228,92, FLAME, 5),
+    line(200,65,220,65, GOLD, 7),       # haltère, position basse
+    label(205,122,"Fin"),
 )
 
-# 11. Rowing élastique
-diagrams["ex-rowelastique"] = wrap(
-    ground(108),
-    line(55,50,68,85),                  # torse penché en hinge
-    head(50,42),
-    line(68,85,55,108),
-    line(68,85,85,108),
-    line(60,58,30,58, MUTED, 3),        # élastique ancré devant
-    line(60,58,90,66, FLAME, 6),        # coude tiré en arrière
+# 11. Rowing élastique — Départ (bras tendus devant) -> Fin (coudes tirés en arrière, flamme)
+diagrams["ex-rowelastique"] = wrap_two(
+    ground(108,5,105), ground(108,155,255),
+    step_arrow(112,55,148),
+    line(55,50,68,85, GOLD, 6), head(50,42,9),
+    line(68,85,55,108, GOLD, 6), line(68,85,85,108, GOLD, 6),
+    line(30,58,60,58, MUTED, 3),
+    line(60,58,32,58, GOLD, 5),         # bras tendus devant
+    label(55,122,"Départ"),
+    line(205,50,218,85, GOLD, 6), head(200,42,9),
+    line(218,85,205,108, GOLD, 6), line(218,85,235,108, GOLD, 6),
+    line(180,58,210,58, MUTED, 3),
+    line(210,58,240,66, FLAME, 6),      # coude tiré en arrière
+    label(205,122,"Fin"),
 )
 
-# 12. Gainage latéral
-diagrams["ex-sideplank"] = wrap(
-    line(20,80,90,55, GOLD, 7),         # corps aligné en diagonale
-    head(98,50),
-    line(45,72,45,50, FLAME, 6),        # bras d'appui + hanche levée
-    line(45,72,45,95),                  # avant-bras au sol
-    line(60,66,60,95),                  # jambes empilées
-    ground(100,15,70),
+# 12. Gainage latéral — Côté gauche -> Côté droit (miroir, l'exercice alterne les côtés)
+diagrams["ex-sideplank"] = wrap_two(
+    ground(100,10,70), ground(100,190,250),
+    step_arrow(112,55,148),
+    line(20,80,90,55, GOLD, 7), head(98,50,9),
+    line(45,72,45,50, GOLD, 6), line(45,72,45,95, GOLD, 5),
+    line(60,66,60,95, GOLD, 5),
+    label(55,116,"Côté gauche"),
+    line(240,80,170,55, GOLD, 7), head(162,50,9),
+    line(215,72,215,50, GOLD, 6), line(215,72,215,95, GOLD, 5),
+    line(200,66,200,95, GOLD, 5),
+    label(205,116,"Côté droit"),
 )
 
 # 13. Chat-Vache — pictogramme deux poses : Chat (dos rond, tête basse) -> Vache (dos creux, tête haute)
@@ -201,37 +244,49 @@ diagrams["ex-catcow"] = wrap_two(
     label(205,120,"Vache"),
 )
 
-# 14. Rotation externe épaule (élastique)
-diagrams["ex-shoulderband"] = wrap(
-    ground(108),
-    line(60,44,60,80),
-    head(60,34),
-    line(60,80,48,108),
-    line(60,80,72,108),
+# 14. Rotation externe épaule (élastique) — Départ (avant-bras vers l'intérieur) -> Fin (rotation externe, flamme)
+diagrams["ex-shoulderband"] = wrap_two(
+    ground(108,5,105), ground(108,155,255),
+    step_arrow(112,55,148),
+    line(60,44,60,80, GOLD, 6), head(60,34,9),
+    line(60,80,48,108, GOLD, 6), line(60,80,72,108, GOLD, 6),
     line(60,55,80,55, MUTED, 3),        # coude fixe
-    line(80,55,80,35, FLAME, 6),        # avant-bras en rotation
-    arc(80,55,20,270,340),
+    line(80,55,80,75, GOLD, 5),         # avant-bras vers l'intérieur
+    label(55,122,"Départ"),
+    line(210,44,210,80, GOLD, 6), head(210,34,9),
+    line(210,80,198,108, GOLD, 6), line(210,80,222,108, GOLD, 6),
+    line(210,55,230,55, MUTED, 3),      # coude fixe
+    line(230,55,230,32, FLAME, 6),      # avant-bras en rotation externe
+    arc(230,55,20,270,340),
+    label(205,122,"Fin"),
 )
 
-# 15. Vélo elliptique — fractionné
-diagrams["ex-elliptique-fractionne"] = wrap(
-    ground(108),
-    line(60,48,63,78),                  # torse penché en avant
-    head(56,38),
-    line(63,78,45,60, FLAME, 5),        # bras arrière
-    line(63,78,85,95, FLAME, 5),        # bras avant
-    line(63,78,50,108),                 # jambe arrière
-    line(63,78,90,100),                 # jambe avant
-    line(30,110,100,110, MUTED, 4),     # base de l'appareil
+# 15. Vélo elliptique — Échauffement (posture neutre) -> Effort (plus incliné, plus dynamique, flamme)
+diagrams["ex-elliptique-fractionne"] = wrap_two(
+    line(30,108,100,108, MUTED, 4),
+    line(165,108,235,108, MUTED, 4),
+    step_arrow(112,55,148),
+    line(60,48,63,78, GOLD, 5), head(56,38,9),
+    line(63,78,50,62, GOLD, 4), line(63,78,80,90, GOLD, 4),
+    line(63,78,52,104, GOLD, 5), line(63,78,88,98, GOLD, 5),
+    label(55,122,"Échauffement"),
+    line(213,45,220,72, FLAME, 5), head(206,35,9),
+    line(220,72,200,50, FLAME, 5), line(220,72,242,90, FLAME, 5),
+    line(220,72,205,104, FLAME, 5), line(220,72,245,96, FLAME, 5),
+    label(205,122,"Effort"),
 )
 
-# 16. Étirement complet (retour au calme, assis, buste vers l'avant)
-diagrams["ex-catcow-mat-souplesse"] = wrap(
-    ground(108),
+# 16. Étirement complet (retour au calme) — Départ (assis buste droit) -> Fin (penché vers les pieds, flamme)
+diagrams["ex-catcow-mat-souplesse"] = wrap_two(
+    ground(108,5,105), ground(108,155,255),
+    step_arrow(112,55,148),
     line(35,108,80,108, GOLD, 6),       # jambes tendues au sol
-    line(38,105,60,68, FLAME, 6),       # torse penché vers l'avant
-    head(65,60),
-    line(60,68,40,85, MUTED, 4),        # bras tendus vers les pieds
+    line(45,105,50,65, GOLD, 6), head(48,58,9),
+    label(55,122,"Départ"),
+    line(185,108,230,108, GOLD, 6),
+    line(190,105,168,85, FLAME, 6), head(163,80,9),
+    line(168,85,148,100, FLAME, 5),     # bras tendus vers les pieds
+    label(205,122,"Fin"),
 )
 
 with open("js/diagrams.js", "w", encoding="utf-8") as f:
