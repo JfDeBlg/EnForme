@@ -28,6 +28,7 @@ const App = {
   biblioFilters: { objectifs: new Set(), materiel: new Set(), search: "" },
 
   async init() {
+    document.getElementById("app-version").textContent = "v" + APP_VERSION;
     this.profile = Store.getProfile();
     await this.loadData();
     this.bindMenu();

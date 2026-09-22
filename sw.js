@@ -1,11 +1,14 @@
 /* EnForme! — service worker : cache l'app shell pour un usage hors-ligne. */
 
-const CACHE_NAME = "enforme-cache-v4";
+importScripts("js/version.js");
+
+const CACHE_NAME = "enforme-cache-v" + APP_VERSION.replace(/\./g, "-");
 const APP_SHELL = [
   "./",
   "./index.html",
   "./manifest.json",
   "./css/style.css",
+  "./js/version.js",
   "./js/app.js",
   "./js/storage.js",
   "./js/timer.js",

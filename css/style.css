@@ -97,6 +97,13 @@ a { color: var(--gold); }
   font-weight: 800;
 }
 
+.app-bar__version {
+  font-size: 0.7rem;
+  font-weight: 400;
+  color: var(--text-muted);
+  margin-left: 4px;
+}
+
 .burger {
   width: 42px;
   height: 42px;

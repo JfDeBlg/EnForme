@@ -38,6 +38,7 @@ enforme/
 ├── sw.js                 # Service worker (cache hors-ligne)
 ├── css/style.css        # Design system (tokens couleur, layout, composants)
 ├── js/
+│   ├── version.js       # Source de vérité du numéro de version (APP_VERSION)
 │   ├── app.js           # Logique applicative : navigation, séances, rendu
 │   └── storage.js       # Couche de persistance (localStorage + export/import)
 ├── data/
@@ -48,6 +49,7 @@ enforme/
 
 ## Fonctionnalités (V0)
 
+- **Bandeau haut** : titre "EnForme!" avec le numéro de version affiché à côté (ex. "v1.1.0"), tiré de `js/version.js`.
 - **Menu sandwich** (ouverture à droite) : Réglages, Nouvel entraînement, Reprendre un entraînement, Bibliothèque d'exercices, Historique, Statistiques.
 - **Réglages** : profil du pratiquant (âge, sexe, niveau, blessures, fréquence visée), matériel disponible, curseurs de pondération par objectif (golf en priorité par défaut), export/import JSON, effacement des données.
 - **Nouvel entraînement** :

@@ -18,6 +18,7 @@ Ce fichier est destiné à toute personne (ou instance de Claude) qui reprendrai
 | Vidéos = lien de recherche YouTube (`videoQuery`), pas de lien fixe | Aucune vidéo YouTube spécifique n'a été vérifiée comme stable/pérenne lors de la création de V0 ; un lien fixe non vérifié risquerait de pointer vers un contenu erroné ou disparu. À améliorer (voir feuille de route). |
 | Palette chaude (braise/orange/or) définie en variables CSS dans `css/style.css` | Demande explicite de l'utilisateur ; **toute nouvelle vue doit réutiliser les tokens existants** (`--flame`, `--gold`, `--bg`, etc.) plutôt que d'introduire de nouvelles couleurs |
 | Un seul fichier `app.js` (pas de modules ES / bundler) | Cohérence avec le choix "natif sans build step" ; si le fichier devient trop volumineux, envisager un découpage par vue en gardant le même mécanisme de chargement `<script>` simple (pas de bundler sans en discuter avec l'utilisateur) |
+| `js/version.js` comme source de vérité unique du numéro de version (`APP_VERSION`) | Le bandeau haut (`.app-bar__version`) et `CACHE_NAME` du service worker en sont tous deux dérivés, pour n'avoir qu'un seul endroit à modifier à chaque session de dev. `sw.js` le lit via `importScripts("js/version.js")` (pas de `<script>` possible dans un service worker) |
 
 ## Modèle de données
 
@@ -58,7 +59,7 @@ Fonctions clés dans `js/app.js` : `topObjectifs()`, `scoreExercise()`, `exercis
 - Français pour tout ce qui est visible par l'utilisateur (UI, données) ; identifiants techniques (variables, fonctions, clés JSON) en anglais/français mixte existant, rester cohérent avec l'existant plutôt que de tout renommer.
 - Pas de dépendance externe (CDN ou npm) sans en discuter avec l'utilisateur au préalable — le projet doit rester utilisable hors-ligne et sans étape de build.
 - Le service worker (`sw.js`) liste explicitement les fichiers de l'app shell dans `APP_SHELL` : **tout nouveau fichier statique ajouté au projet doit être ajouté à cette liste**, sinon il ne sera pas disponible hors-ligne.
-- Incrémenter `CACHE_NAME` (ex. `enforme-cache-v2`) à chaque changement de contenu des fichiers mis en cache, pour forcer la mise à jour côté utilisateur.
+- À chaque session de dev qui modifie un fichier statique, **incrémenter `APP_VERSION` dans `js/version.js`** — c'est la seule chose à changer, le bandeau haut et `CACHE_NAME` du service worker en sont dérivés automatiquement et forcent ainsi la mise à jour côté utilisateur.
 
 ## Processus de versioning
 
@@ -75,11 +76,12 @@ Chaque évolution significative doit :
 - **V1.2** : bibliothèque d'exercices consultable (`view-bibliotheque`), filtrage par objectif/matériel + recherche texte, détail en panneau superposé (`.detail-overlay`). À cette occasion, correction de données : les `objectifs[]` des exercices ne portaient que les tags sport (golf/ski/voile/kite), sans `souplesse`/`force`/`endurance` — corrigé via une règle `categorie → objectif` dans `tools/generate_diagrams.py`'s voisin (voir historique git) pour rester cohérent avec les curseurs du profil.
 - **V1.3** : pictogrammes SVG par exercice (`js/diagrams.js`, généré par `tools/generate_diagrams.py`). Convention : trait or = posture, trait flamme = segment qui travaille, pointillés = élastique/trajectoire. **Ne pas éditer `js/diagrams.js` à la main** : modifier les coordonnées dans le script Python et relancer `python3 tools/generate_diagrams.py`, pour garder les deux fichiers synchronisés.
 - **V1.4** : génération dynamique de séance ("Séance sur-mesure") — voir section dédiée du README pour l'algorithme (filtrage matériel, score = somme des pondérations d'objectifs, tirage pondéré sans remise). Le résultat est encapsulé dans un objet ayant la même forme qu'un `programme` de `programmes.json` (`{id, nom, objectifPrincipal, dureeMin, exercices}`), ce qui lui permet de traverser `App.startSession()` sans code spécifique.
+- **V1.5** : numéro de version affiché dans le bandeau (`.app-bar__brand`), injecté en JS depuis `APP_VERSION` (`js/version.js`, chargé en premier dans `index.html`). `sw.js` dérive désormais `CACHE_NAME` de la même constante via `importScripts`, au lieu d'un incrément manuel séparé. Valeur courante de `APP_VERSION` au moment de cette session : `"1.1.0"` (numérotation propre au fichier, indépendante des libellés `V1.x` de cet historique).
 
 ## Notes techniques utiles pour la suite
 
 - Pour prévisualiser tous les pictogrammes en une planche contact (utile après une modification de `tools/generate_diagrams.py`) : le script peut être appelé puis son JSON extrait et rendu en PNG via `cairosvg` (`pip install cairosvg --break-system-packages`). Voir la session de développement V1.3 dans l'historique git pour un exemple de script de planche contact.
-- Le service worker doit voir son `CACHE_NAME` incrémenté (`v3`, `v4`, ...) à chaque ajout/modification de fichier statique, sans quoi les utilisateurs ayant déjà installé la PWA garderont une version en cache.
+- `CACHE_NAME` (`sw.js`) est dérivé de `APP_VERSION` (`js/version.js`) : incrémenter `APP_VERSION` à chaque ajout/modification de fichier statique suffit à forcer la mise à jour du cache côté utilisateur, plus besoin d'incrémenter `CACHE_NAME` séparément à la main.
 
 ## Idées explorées puis écartées (pour éviter de les reproposer sans raison)
 
